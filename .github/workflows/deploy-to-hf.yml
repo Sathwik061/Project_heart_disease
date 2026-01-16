@@ -31,7 +31,7 @@ jobs:
           from huggingface_hub import HfApi
 
           # Hugging Face Space path
-          repo_id = "Sathwikmadire/heart_disease"
+          repo_id = "sathwik061/heart_disease"
 
           api = HfApi()
 
