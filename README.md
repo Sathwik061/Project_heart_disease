@@ -10,6 +10,9 @@ app_file: app.py
 pinned: false
 ---
 
+
+Heart Disease Prediction is a Classification Type (predicts Heart Disease or No Heart Disease) Trained with 2 models Logistic regression and Random forest models, along with risk probability score .Deployed in **Hugging face spaces** with the help of **Gradio**.
+
 Hugging Face Live Demo : https://huggingface.co/spaces/sathwik061/heart_disease
 
 give the input for predicting heart disease:-
@@ -42,4 +45,4 @@ give the input for predicting no heart disease:-
 -   Number of Majore Vessels:0
 -   Thalassemia:2
 
-You can give your own input to know the prdediction of heart disease these are the sample which i have tested.
+You can give your own input to know the prdediction of heart disease these are the sample which i have tested.These 13 features are enough to predict the heart disease
