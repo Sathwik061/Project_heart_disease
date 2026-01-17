@@ -45,7 +45,8 @@ def train_model(model_type='logistic'):
         mlflow.log_param("model_type", model_type)
         mlflow.log_metric("accuracy",accuracy)
         mlflow.log_metric("roc_auc", roc_auc)
-        mlflow.sklearn.log_model(pipeline, f"model_{model_type}")
+        mlflow.sklearn.log_model(pipeline, "model")  # for tests purpose
+        mlflow.sklearn.log_model(pipeline, f"model_{model_type}") #for tracking purpose
         os.makedirs("model", exist_ok=True)
         joblib.dump(pipeline, f"model/{model_type}.pkl")
 

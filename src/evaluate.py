@@ -16,7 +16,7 @@ def evaluate(model_type="logistic"):
         )
 
     print("Performance meets baseline threshold")
-    return accuracy, roc_auc, run_id
+    return accuracy,roc_auc, run_id
 
 
 if __name__ == "__main__":   
