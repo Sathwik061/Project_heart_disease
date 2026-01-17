@@ -3,7 +3,7 @@ import mlflow.pyfunc
 import pandas as pd
 
 # Load exported MLflow model (dumped locally)
-model = mlflow.pyfunc.load_model("model")
+model = mlflow.pyfunc.load_model("model/model")
 
 # Feature columns (MUST match training exactly)
 FEATURE_COLUMNS = [
