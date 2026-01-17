@@ -1,9 +1,11 @@
 import gradio as gr
-import mlflow.pyfunc
+import joblib
 import pandas as pd
 
 # Load exported MLflow model (dumped locally)
-model = mlflow.pyfunc.load_model("model/model")
+# Load both models
+lr_model = joblib.load("model/logistic.pkl")
+rf_model = joblib.load("model/random_forest.pkl")
 
 # Feature columns (MUST match training exactly)
 FEATURE_COLUMNS = [
@@ -38,7 +40,7 @@ def predict(
     thalassemia,
 ):
     # Create input DataFrame
-    data = [[
+    df=pd.DataFrame( [[
         age,
         sex,
         chest_pain_type,
@@ -52,18 +54,23 @@ def predict(
         st_slope,
         number_of_major_vessels,
         thalassemia,
-    ]]
+    ]],columns=FEATURE_COLUMNS)
 
-    df = pd.DataFrame(data, columns=FEATURE_COLUMNS)
+     # --- Logistic Regression ---
+    lr_prob = lr_model.predict_proba(df)[0][1]   # probability of disease
+    lr_pred = 1 if lr_prob > 0.5 else 0
 
-    # Model prediction
-    prediction = model.predict(df)[0]
-    if prediction == 1:
-        return "Yes you have heart disease"
-    else:
-        return "You are healthy no heart disease predicted"
-    
+    # --- Random Forest ---
+    rf_prob = rf_model.predict_proba(df)[0][1]
+    rf_pred = 1 if rf_prob > 0.5 else 0
 
+    # Average risk (simple ensemble for display)
+    avg_risk = (lr_prob + rf_prob) / 2
+    return f"""
+Risk Probability: {avg_risk*100:.2f} %
+Logistic Regression: {"You are having Heart Disease" if lr_pred == 1 else "You don't have Heart Disease"}
+Random Forest: {"You are having Heart Disease" if rf_pred == 1 else "You don't have Heart Disease"}
+"""
 # Gradio UI
 interface = gr.Interface(
     fn=predict,
