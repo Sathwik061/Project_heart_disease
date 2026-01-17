@@ -1,6 +1,8 @@
 import mlflow
 import pandas as pd
 import mlflow.sklearn
+import joblib
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -43,7 +45,9 @@ def train_model(model_type='logistic'):
         mlflow.log_param("model_type", model_type)
         mlflow.log_metric("accuracy",accuracy)
         mlflow.log_metric("roc_auc", roc_auc)
-        mlflow.sklearn.log_model(pipeline,"model")
+        mlflow.sklearn.log_model(pipeline, f"model_{model_type}")
+        os.makedirs("model", exist_ok=True)
+        joblib.dump(pipeline, f"model/{model_type}.pkl")
 
         run_id=run.info.run_id
 
