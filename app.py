@@ -57,10 +57,12 @@ def predict(
     df = pd.DataFrame(data, columns=FEATURE_COLUMNS)
 
     # Model prediction
-    prediction = model.predict(df)
-
-    return "Heart Disease Detected" if prediction[0] == 1 else "No Heart Disease"
-
+    prediction = model.predict(df)[0]
+    if prediction == 1:
+        return "Yes you have heart disease"
+    else:
+        return "You are healthy no heart disease predicted"
+    
 
 # Gradio UI
 interface = gr.Interface(
